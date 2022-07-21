@@ -1,0 +1,35 @@
+import java.util.*;
+
+public class Solution {
+    
+    public static int minimumElementsUtil(int[] num,int x,int index,int[][] dp){
+        if(index==0){
+            if(x%num[index]==0){
+                return x/num[index];
+            }return 1000000000;
+        }
+        if(dp[index][x]!=-1){
+            return dp[index][x];
+        }
+        int notTake=0+minimumElementsUtil(num,x,index-1,dp);
+        int take=1000000000;
+        if(num[index]<=x){
+            take=1+minimumElementsUtil(num,x-num[index],index,dp);
+        }
+        dp[index][x]=Math.min(take,notTake);
+        return dp[index][x];
+    }
+    public static int minimumElements(int num[], int x) {
+        // Write your code here..
+        
+        int[][] dp=new int[num.length][x+1];
+        for(int[] temp:dp){
+            Arrays.fill(temp,-1);
+        }
+        int ans=minimumElementsUtil(num,x,num.length-1,dp);
+        if(ans>=1000000000){
+            return -1;
+        }return ans;
+    }
+
+}
