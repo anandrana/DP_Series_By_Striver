@@ -27,3 +27,22 @@ public class Solution {
         
     }
 }
+
+
+
+space otimization code in pyton
+def unboundedKnapsack(n, w, profit, weight):
+    
+    # Write Your code here.
+    prev=[0]*(w+1)
+    for W in range(w+1):
+        prev[W]=(W//weight[0])*profit[0]
+    
+    for i in range(1,n):
+        for W in range(w+1):
+            notTake=prev[W]
+            take=0
+            if(weight[i]<=W):
+                take=profit[i]+prev[W-weight[i]]
+            prev[W]=max(take,notTake)
+    return prev[w]
