@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class Solution {
+    public static int cutRodMaxProfit(int[] price,int index,int n,int[][] dp){
+        if(index==0){
+            return n*price[index];
+        }
+        if(dp[index][n]!=-1){
+            return dp[index][n];
+        }
+        int notTake=cutRodMaxProfit(price,index-1,n,dp);
+        int take=Integer.MIN_VALUE;
+        int rodLength=index+1;
+        if(rodLength<=n){
+            take=price[index]+cutRodMaxProfit(price,index,n-rodLength,dp);
+        }
+        dp[index][n]=Math.max(take,notTake);
+        return dp[index][n];
+    }
+	public static int cutRod(int price[], int n) {
+		// Write your code here.
+        int[][] dp=new int[n][n+1];
+        for(int i=0;i<n;i++){
+            Arrays.fill(dp[i],-1);
+        }
+        return cutRodMaxProfit(price,n-1,n,dp);
+	}
+}
