@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Solution {
+
+//     public static int lcsUtil(String s,String t,int sLen,int tLen,int[][] dp){
+//         if(sLen<0 || tLen<0){
+//             return 0;
+//         }
+//         if(dp[sLen][tLen]!=-1){
+//             return dp[sLen][tLen];
+//         }
+//         int equal=0;
+//         int notEqual=0;
+//         if(s.charAt(sLen)==t.charAt(tLen)){
+//             equal=1+lcsUtil(s,t,sLen-1,tLen-1,dp);
+//         }
+//         else{
+//             notEqual=Math.max(lcsUtil(s,t,sLen-1,tLen,dp),lcsUtil(s,t,sLen,tLen-1,dp));
+//         }
+//         dp[sLen][tLen]=Math.max(equal,notEqual);
+        
+//         return dp[sLen][tLen];
+//     }
+	public static int lcs(String s, String t) {
+		//Your code goes here
+        int sLen=s.length();
+        int tLen=t.length();
+        
+        int[][] dp=new int[sLen+1][tLen+1];
+        for(int i=0;i<=sLen;i++){
+            for(int j=0;j<=tLen;j++){
+                if(i==0 || j==0){
+                    dp[i][j]=0;
+                }else{
+                    if(s.charAt(i-1)==t.charAt(j-1)){
+                        dp[i][j]=1+dp[i-1][j-1];
+                    }else{
+                        dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                    }
+                }
+            }
+        }
+        return dp[sLen][tLen];
+//         for(int i=0;i<sLen;i++){
+//             Arrays.fill(dp[i],-1);
+//         }
+//         return lcsUtil(s,t,s.length()-1,t.length()-1,dp);
+    }
+
+}
