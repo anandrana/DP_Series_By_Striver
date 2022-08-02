@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Solution {
+    public static int lcs(String str,String ptr,int s,int p,int[][] dp){
+        if(s<0 || p<0){
+            return 0;
+        }
+        if(dp[s][p]!=-1){
+            return dp[s][p];
+        }
+        int equal=0,notEqual=0;
+        if(str.charAt(s)==ptr.charAt(p)){
+            equal=1+lcs(str,ptr,s-1,p-1,dp);
+        }else{
+            notEqual=Math.max(lcs(str,ptr,s-1,p,dp),lcs(str,ptr,s,p-1,dp));
+        }
+        dp[s][p]=Math.max(equal,notEqual);
+        return dp[s][p];
+    }
+    public static int canYouMake(String str, String ptr) {
+        // Write your code here.
+        int s=str.length();
+        int p=ptr.length();
+        int[][] dp=new int[s][p];
+        for(int i=0;i<s;i++){
+            Arrays.fill(dp[i],-1);
+        }
+        int tempLCS=lcs(str,ptr,s-1,p-1,dp);
+        return (s-tempLCS)+(p-tempLCS);
+    }
+
+}
