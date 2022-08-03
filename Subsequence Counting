@@ -1,0 +1,43 @@
+import java.util.*;
+public class Solution {
+//     public static int noSubsequenceCouting(String t,String s,int lt,int ls,int[][] dp){
+//         if(ls<0){
+//             return 1;
+//         }
+//         if(lt<0){
+//             return 0;
+//         }
+//         if(dp[lt][ls]!=-1){
+//             return dp[lt][ls];
+//         }
+//         if(t.charAt(lt)==s.charAt(ls)){
+//             dp[lt][ls]= (noSubsequenceCouting(t,s,lt-1,ls-1,dp)%1000000007)+(noSubsequenceCouting(t,s,lt-1,ls,dp)%1000000007);
+//             return dp[lt][ls]%1000000007;
+//         }
+//         dp[lt][ls]= noSubsequenceCouting(t,s,lt-1,ls,dp);
+//         return dp[lt][ls]%1000000007;
+        
+//     }
+    public static int subsequenceCounting(String t, String s, int lt, int ls) {
+        // Write your code here..
+        int[][] dp=new int[lt+1][ls+1];
+        for(int i=0;i<=ls;i++){
+            dp[0][i]=0;
+        }
+        for(int i=0;i<=lt;i++){
+            dp[i][0]=1;
+        }
+        
+        for(int i=1;i<=lt;i++){
+            for(int j=1;j<=ls;j++){
+                if(t.charAt(i-1)==s.charAt(j-1)){
+                    dp[i][j]=(dp[i-1][j-1]+dp[i-1][j])%1000000007;
+                }else{
+                    dp[i][j]=dp[i-1][j]%1000000007;
+                }
+            }
+        }
+        return dp[lt][ls]%1000000007;
+    }
+
+}
