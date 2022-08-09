@@ -1,0 +1,66 @@
+public class Solution
+{
+//     public static int maxProfitUtil(int[] prices,int n,int k,int buy,int index,int[][][] dp){
+//         if(k==0){
+//             return 0;
+//         }
+//         if(index==n){
+//             return 0;
+//         }
+//         if(dp[index][buy][k]!=-1){
+//             return dp[index][buy][k];
+//         }
+        
+//         int profit=0;
+//         if(buy==1){
+//             return dp[index][buy][k]=Math.max(-prices[index]+maxProfitUtil(prices,n,k,0,index+1,dp),
+//                            maxProfitUtil(prices,n,k,1,index+1,dp));   
+//         }else{
+//             return dp[index][buy][k]=Math.max(prices[index]+maxProfitUtil(prices,n,k-1,1,index+1,dp),
+//                            maxProfitUtil(prices,n,k,0,index+1,dp));
+//         }
+       
+//     }
+public static int maximumProfit(int[] prices, int n, int k)
+    {
+        // Write your code here.
+    
+//         int[][][] dp=new int[n+1][2][k+1];
+//         for(int i=0;i<=n;i++){
+//             for(int j=0;j<2;j++){
+//                 for(int l=0;l<k+1;l++){
+//                     dp[i][j][l]=-1;
+//                 }
+//             }
+//         }
+//         return maxProfitUtil(prices,n,k,1,0,dp);
+    
+        int[][] ahead=new int[2][k+1];
+        int[][] cur=new int[2][k+1];
+        for(int i=0;i<2;i++){
+            for(int j=0;j<=k;j++){
+                ahead[i][j]=0;
+                cur[i][j]=0;
+            }
+        }
+    
+        for(int i=n-1;i>=0;i--){
+            for(int buy=0;buy<2;buy++){
+                for(int trans=1;trans<k+1;trans++){
+                    if(buy==1){
+                        cur[buy][trans]=Math.max(-prices[i]+ahead[0][trans],ahead[1][trans]);
+                    }else{
+                        cur[buy][trans]=Math.max(prices[i]+ahead[1][trans-1],ahead[0][trans]);
+                    }
+                }
+            }
+            
+            for(int l=0;l<2;l++){
+                for(int m=0;m<k+1;m++){
+                    ahead[l][m]=cur[l][m];
+                }
+            }
+        }
+        return ahead[1][k];
+    }
+}
