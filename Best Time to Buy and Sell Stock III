@@ -52,3 +52,77 @@ public class Solution {
 //         return maxProfitUtil(prices,0,1,2,dp);
 	}
 }
+
+
+//////////////////////////////////////////////////////////////////////
+space optimize 
+
+import java.util.*;
+
+public class Solution {
+//     public static int maxProfitUtil(ArrayList<Integer> prices, int n,int buy,int trans,int[][][] dp){
+//         if(trans==0){
+//             return 0;
+//         }
+//         if(n==prices.size()){
+//             return 0;
+//         }
+     
+//         if(dp[n][buy][trans]!=-1){
+//             return dp[n][buy][trans];
+//         }
+        
+//         if(buy==1){
+//             return dp[n][buy][trans]=Math.max(-1*prices.get(n)+maxProfitUtil(prices,n+1,0,trans,dp),
+//                            maxProfitUtil(prices,n+1,1,trans,dp));
+//         }
+//         else{
+//             return dp[n][buy][trans]=Math.max(prices.get(n)+maxProfitUtil(prices,n+1,1,trans-1,dp),
+//                            maxProfitUtil(prices,n+1,0,trans,dp));
+//         }
+
+        
+        
+//     }
+	public static int maxProfit(ArrayList<Integer> prices, int n) {
+		// Write your code here.
+        
+//         int[][][] dp=new int[n+1][2][3];
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<2;j++){
+//                 for(int k=0;k<3;k++){
+//                     dp[i][j][k]=0;
+//                 }
+//             }
+//         }
+        
+        int[][] ahead=new int[2][3];
+        int[][] cur=new int[2][3];
+        
+        for(int i=0;i<2;i++){
+            for(int j=0;j<3;j++){
+                ahead[i][j]=0;
+                cur[i][j]=0;
+            }
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int buy=0;buy<2;buy++){
+                for(int trans=1;trans<3;trans++){
+                    if(buy==1)
+                        cur[buy][trans]=Math.max(-1*prices.get(i)+ahead[0][trans],
+                                              ahead[1][trans]);
+                    else
+                        cur[buy][trans]=Math.max(prices.get(i)+ahead[1][trans-1],ahead[0][trans]);
+                }
+            }
+            
+            for(int k=0;k<2;k++){
+                for(int l=0;l<3;l++){
+                    ahead[k][l]=cur[k][l];
+                }
+            }
+        }
+        return ahead[1][2];
+//         return maxProfitUtil(prices,0,1,2,dp);
+	}
+}
