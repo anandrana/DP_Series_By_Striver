@@ -1,0 +1,67 @@
+from sys import stdin
+import sys 
+import bisect
+sys.setrecursionlimit(10**7)
+def longestIncreasingSubsequence(nums, n) :
+        dp=[0]*len(nums)
+        dp[0]=nums[0]
+        length=1
+        for i in range(1,len(nums)):
+            #if elements is smallest from all
+            if(nums[i]<dp[0]):
+                dp[0]=nums[i]
+            elif(nums[i]>dp[length-1]):
+                dp[length]=nums[i]
+                length+=1
+            else:
+                index=bisect.bisect_left(dp[:length],nums[i])
+                    
+                dp[index]=nums[i]
+        return length
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#taking inpit using fast I/O
+def takeInput() :
+    n = int(input())
+
+    if n==0 :
+        return list(), n
+        
+    arr = list(map(int, stdin.readline().strip().split(" ")))
+
+    return arr, n
+
+
+#main
+arr, n = takeInput()
+print(longestIncreasingSubsequence(arr, n))
