@@ -1,0 +1,20 @@
+def lcs(arr,n):
+    dp=[1]*n
+    
+    for i in range(n):
+        for j in range(i):
+            if(arr[i]>arr[j] and dp[i]<dp[j]+1):
+                dp[i]=1+dp[j]
+    return dp
+
+def longestBitonicSequence(arr, n):
+    # Write your code here.
+    
+    dp1=lcs(arr,n)
+    arr.reverse()
+    dp2=lcs(arr,n)
+    dp2.reverse()
+    Max=0
+    for i in range(n):
+        Max=max(Max,dp1[i]+dp2[i]-1)
+    return Max
